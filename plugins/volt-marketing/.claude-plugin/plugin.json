@@ -1,0 +1,12 @@
+{
+  "name": "volt-marketing",
+      "version": "1.0.0",
+      "description": "Elite Marketing Strategist & Customer Acquisition Specialist for Phoenix Electric CO — ROI-obsessed, data-driven residential electrical contractor marketing for Colorado Front Range. Covers Generac generators, custom homes, remodels, service calls, basements, EV chargers, and all residential electrical service lines.",
+      "author": {
+    "name": "Shane Warehime",
+          "email": "shane@phoenixelectric.life"
+      },
+        "repository": "https://github.com/shane7777777777777/phoenix-plugins",
+        "license": "PROPRIETARY",
+        "keywords": ["marketing", "advertising", "lead-generation", "generac", "residential-electrical", "colorado", "denver", "elizabeth", "douglas-county", "phoenix-electric", "roi", "google-ads", "seo", "local-marketing"]
+      }
