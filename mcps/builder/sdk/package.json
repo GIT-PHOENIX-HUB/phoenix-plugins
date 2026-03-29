@@ -1,0 +1,21 @@
+{
+  "name": "@phoenix-builder-space/sdk",
+  "version": "0.1.0",
+  "description": "Phoenix Builder Space client SDK for Phoenix MCP + Azure Functions APIs",
+  "private": true,
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "echo 'Phoenix SDK uses source files directly – add bundler when ready.'",
+    "lint": "eslint src --ext .js || true",
+    "test": "echo 'No SDK tests yet'"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
