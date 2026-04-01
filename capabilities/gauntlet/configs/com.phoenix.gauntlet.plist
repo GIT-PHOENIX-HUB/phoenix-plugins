@@ -12,8 +12,9 @@
         <string>server/index.js</string>
     </array>
 
+    <!-- CUSTOMIZE: Update these paths for your machine -->
     <key>WorkingDirectory</key>
-    <string>/Users/shanewarehime/GitHub/phoenix-gauntlet</string>
+    <string>/Users/YOUR_USERNAME/GitHub/phoenix-toolbox/capabilities/gauntlet</string>
 
     <key>RunAtLoad</key>
     <true/>
@@ -21,11 +22,12 @@
     <key>KeepAlive</key>
     <true/>
 
+    <!-- CUSTOMIZE: Update log paths for your machine -->
     <key>StandardOutPath</key>
-    <string>/Users/shanewarehime/Phoenix_Local/_RUNTIME/gauntlet/gauntlet.out.log</string>
+    <string>/Users/YOUR_USERNAME/Phoenix_Local/_RUNTIME/gauntlet/gauntlet.out.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/shanewarehime/Phoenix_Local/_RUNTIME/gauntlet/gauntlet.err.log</string>
+    <string>/Users/YOUR_USERNAME/Phoenix_Local/_RUNTIME/gauntlet/gauntlet.err.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>
