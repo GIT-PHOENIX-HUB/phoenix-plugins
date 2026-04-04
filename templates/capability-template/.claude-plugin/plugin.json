@@ -1,0 +1,19 @@
+{
+    "name": "{{capability-name}}",
+    "version": "1.0.0",
+    "description": "{{SHORT_DESCRIPTION}}",
+    "author": "Phoenix Electric",
+    "commands": {
+          "{{command-name}}": {
+                  "description": "{{What this command does}}",
+                  "file": "commands/{{command-name}}.md"
+          }
+    },
+    "skills": [
+          "skills/SKILL.md"
+    ],
+    "agents": [
+          "agents/AGENT.md"
+    ],
+    "hooks": "hooks/hooks.json"
+}

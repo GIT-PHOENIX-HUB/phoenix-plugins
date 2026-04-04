@@ -1,103 +1,153 @@
-# Phoenix Plugins
+# Phoenix Toolbox
 
-**Custom Claude Code plugins, skills, and MCP servers for Phoenix Electric LLC**
+**The capability hub for Phoenix Electric's AI system.**
 
-Built by Shane Warehime and Phoenix Echo (Claude Code CLI agent) for the Phoenix AI system — a persistent, multi-agent electrical contracting operations platform.
+Built by Shane Warehime, Phoenix Echo (CLI), and BBB (Browser) for the Phoenix AI platform — a persistent, multi-agent system powering electrical contracting operations in Denver Metro, Colorado.
 
 ---
 
 ## What This Repo Is
 
-This is the central, organized repository for every custom-built plugin, skill, agent, and MCP server in the Phoenix ecosystem. Each plugin has its own README explaining exactly what it does, how it works, and how to maintain it.
+Phoenix Toolbox is the central repository for every custom-built capability, MCP server, skill, agent, and CLI tool in the Phoenix ecosystem. Each capability is self-contained, documented, and installable independently.
 
-**Purpose:**
-- No reinventing the wheel — point any agent here and they build on top
-- Agents can maintain their own tools — when something breaks, it gets fixed
-- Public access for team collaboration (Stephanie, future contributors)
-- Organized reference that survives session resets and agent turnover
+This repo follows a **capability-first architecture**: every functional unit lives under `capabilities/<name>/` with its own README, commands, skills, agents, hooks, and configuration. MCP servers that serve multiple capabilities live under `mcp-servers/`. Templates and development guides live under `templates/` and `docs/`.
 
 ---
 
-## Plugin Inventory
+## Capability Inventory
 
-| Plugin | Description | Commands | Skills | Agents | MCP |
-|--------|-------------|----------|--------|--------|-----|
-| [echo-persistence](plugins/echo-persistence/) | Identity persistence — session logging, state preservation, context survival across compactions | 7 | 1 | 5 | - |
-| [servicefusion](plugins/servicefusion/) | Service Fusion CRM integration — jobs, estimates, customers, invoices, scheduling | 6 | 1 | 1 | Yes |
-| [electrical-guru](plugins/electrical-guru/) | NEC 2023 electrical code consultant — Denver Metro / Douglas County | 1 | 1 | - | - |
-| [phoenix-knowledge](plugins/phoenix-knowledge/) | Phoenix Electric knowledge base — build reference from runbooks and research | 1 | 1 | 1 | - |
-| [rexel](plugins/rexel/) | Rexel distributor integration — purchase history, margin analysis, pricebook | 4 | 1 | 1 | Yes |
-| [phoenix-comms](plugins/phoenix-comms/) | Cross-agent heartbeat communication — Echo/Codex presence awareness | 5 | - | - | - |
-| [file-steward](plugins/file-steward/) | File management — organization, triage, research library, filing conventions | 3 | - | 1 | - |
+11 capabilities. 32 commands. 13 skills. 11 agents. 7 hook definitions.
 
-**Totals: 7 plugins, 27 commands, 5 skills, 9 agents, 2 MCP server configurations**
+| Capability | Path | Commands | Skills | Agents | Hooks | Status |
+|---|---|---|---|---|---|---|
+| **Echo Persistence** | `capabilities/echo-persistence/` | 7 | 1 | 5 | 3 | Active — Core System |
+| **Service Fusion** | `capabilities/servicefusion/` | 6 | 1 | 1 | 0 | Active |
+| **Phoenix Comms** | `capabilities/phoenix-comms/` | 5 | 0 | 0 | 3 | Active |
+| **Rexel** | `capabilities/rexel/` | 4 | 1 | 1 | 0 | Active |
+| **Phoenix 365** | `capabilities/phoenix-365/` | 4 | 3 | 2 | 1 | Active |
+| **File Steward** | `capabilities/file-steward/` | 3 | 0 | 1 | 0 | Active |
+| **Electrical Guru** | `capabilities/electrical-guru/` | 1 | 1 | 0 | 0 | Active |
+| **Phoenix Knowledge** | `capabilities/phoenix-knowledge/` | 1 | 1 | 1 | 0 | Active |
+| **Volt Marketing** | `capabilities/volt-marketing/` | 1 | 1 | 0 | 0 | Active |
+| **Gauntlet** | `capabilities/gauntlet/` | — | — | — | — | Active — Standalone App |
+| **Browser Persistence** | `capabilities/browser-persistence/` | — | 4 | — | — | Active — Doc-based |
+
+See [CAPABILITY_REGISTRY.md](CAPABILITY_REGISTRY.md) for the full registry with detailed component counts and installation instructions.
 
 ---
 
-## How Plugins Work
+## MCP Server Inventory
 
-Each plugin follows the Claude Code plugin structure:
+9 MCP server entries across 3 top-level groups plus 1 in-capability server.
+
+| Server | Path | Tools | Transport | Status |
+|---|---|---|---|---|
+| **Builder MCP** | `mcp-servers/builder-mcp/` | 20+ | HTTP (Azure Functions) | Active |
+| **M365 MCP** | `mcp-servers/m365-mcp/` | 18 | stdio (TypeScript) | Active |
+| **Marketing Orchestrator** | `mcp-servers/marketing-mcp/marketing-orchestrator/` | 6 | — | Proposal |
+| **CallRail MCP** | `mcp-servers/marketing-mcp/mcp-callrail/` | 5 | — | Spec Only |
+| **GBP MCP** | `mcp-servers/marketing-mcp/mcp-gbp/` | 5+ | — | Spec Only |
+| **Google Ads MCP** | `mcp-servers/marketing-mcp/mcp-google-ads/` | — | — | Placeholder |
+| **Nextdoor Adapter** | `mcp-servers/marketing-mcp/nextdoor-adapter/` | — | — | Placeholder |
+| **Weather Trigger** | `mcp-servers/marketing-mcp/weather-trigger/` | — | — | Spec Only |
+| **Volt Marketing MCP** | `capabilities/volt-marketing/mcp-server/` | 8 | stdio | Active |
+
+---
+
+## Directory Structure
 
 ```
-plugin-name/
-├── .claude-plugin/
-│   └── plugin.json        # Plugin manifest (name, version, description)
-├── commands/               # Slash commands (e.g., /comms:start)
-├── skills/                 # Auto-activating knowledge skills
-├── agents/                 # Specialized subagents
-├── hooks/
-│   └── hooks.json         # Event-driven automation
-├── .mcp.json              # MCP server definitions (if applicable)
-├── scripts/               # Helper scripts
-└── README.md              # What it does, how to maintain it
+phoenix-toolbox/
+├── capabilities/              # All capabilities (11 total)
+│   ├── echo-persistence/      # Identity, logging, session survival
+│   ├── electrical-guru/       # NEC 2023 code consultant
+│   ├── file-steward/          # File management and triage
+│   ├── phoenix-comms/         # Cross-agent heartbeat protocol
+│   ├── phoenix-knowledge/     # Phoenix Electric knowledge base
+│   ├── rexel/                 # Vendor pricing and purchase history
+│   ├── servicefusion/         # CRM operational control
+│   ├── volt-marketing/        # Marketing strategist + MCP server
+│   ├── gauntlet/              # Multi-agent terminal dashboard (standalone)
+│   ├── phoenix-365/           # Microsoft 365 integration
+│   └── browser-persistence/   # Browser session persistence (doc-based)
+├── mcp-servers/               # Shared MCP servers
+│   ├── builder-mcp/           # Multi-module Azure Functions platform
+│   ├── m365-mcp/              # Microsoft Graph API (TypeScript/stdio)
+│   └── marketing-mcp/         # Marketing MCP server suite
+├── cli/                       # CLI tools and scripts
+├── docs/                      # Development guides and architecture docs
+├── templates/                 # Scaffold templates for new capabilities
+├── .build-log/                # Build session logs
+├── CAPABILITY_REGISTRY.md     # Master index of all capabilities
+├── BUILD_DOC.md               # Build roadmap (historical)
+├── PRODUCT_BIBLE.md           # Product spec (historical)
+├── CODEOWNERS                 # Ownership rules
+└── README.md                  # This file
 ```
-
-### Installation
-
-Plugins install via the local marketplace system:
-
-```bash
-# Symlink a plugin into the local marketplace
-ln -s /path/to/phoenix-plugins/plugins/PLUGIN_NAME \
-  ~/.claude/plugins/marketplaces/local/plugins/PLUGIN_NAME
-
-# Enable in settings.json
-# Add: "PLUGIN_NAME@local": true to enabledPlugins
-```
-
-Or clone this entire repo and symlink all at once.
 
 ---
 
 ## For Agents
 
-If you're an Echo, Codex, or future agent reading this:
+If you are Echo, Codex, BBB, or any future agent reading this:
 
-1. **This repo is your toolbox.** Every custom capability we've built lives here.
-2. **READMEs are your documentation.** Read the README in each plugin before using or modifying it.
-3. **Duplicates exist intentionally.** These plugins also live in their origin repos (ServiceFusion, Phoenix-ECHO, etc.). This repo is the organized central copy.
-4. **When you fix a bug or add a feature to a plugin, update it HERE too.** Keep the central repo current.
-5. **Do not delete files. Archive or overwrite.** Phoenix rule #1.
+**This repo is your toolbox.** Every custom capability Phoenix Electric has built lives here. Before using or modifying anything, read the README in that capability's folder.
 
----
+**How to use a capability:**
+1. Read `capabilities/<name>/README.md` for what it does and how it works
+2. 2. Check `CAPABILITY_REGISTRY.md` for the full inventory and component counts
+   3. 3. Install by symlinking: `ln -s /path/to/capabilities/<name> ~/.claude/plugins/<name>`
+      4. 4. If the capability has an MCP server dependency, install that separately from `mcp-servers/`
+        
+         5. **How to build a new capability:**
+         6. 1. Copy the scaffold from `templates/capability-template/`
+            2. 2. Read `docs/PLUGIN_DEVELOPMENT_GUIDE.md` for the full development guide
+               3. 3. Register it in `CAPABILITY_REGISTRY.md` when complete
+                 
+                  4. **Rules:**
+                  5. - Do not delete files. Archive or overwrite. Golden Rule #1.
+                     - - Quality = Taj Mahal. No shortcuts.
+                       - - Update `CAPABILITY_REGISTRY.md` when you add or modify capabilities.
+                         - - No hardcoded paths without configurable fallbacks.
+                           - - No credentials in code — use Azure Key Vault.
+                            
+                             - ---
 
-## For Humans
+                             ## For Humans
 
-**Shane Warehime** — Owner, Phoenix Electric LLC
-**Stephanie** — Contributor access (ask Shane for permissions)
+                             **Shane Warehime** — Owner, Phoenix Electric LLC
+                             **Stephanie** — Contributor access
 
-This is a public repo. Nothing sensitive lives here — credentials are in Azure Key Vault, not in plugin code.
+                             This is a public repo. Nothing sensitive lives here — all credentials are managed through Azure Key Vault, never stored in code.
 
----
+                             ---
 
-## Architecture Notes
+                             ## Architecture Notes
 
-- **MCP servers** (servicefusion, rexel, pricebook) point to compiled packages in `phoenix-ai-core-staging`. The plugin configs reference those paths — update if package locations change.
-- **Echo-persistence** hooks integrate with the Gateway LEDGER system at `~/Phoenix_Local/_GATEWAY/`. Those paths are MacBook-specific.
-- **Phoenix-comms** enables cross-agent awareness between Claude Code (Echo) and OpenAI Codex CLI on the same machine. Codex drop-in hooks are included in `codex-hooks/`.
-- **Electrical-guru** is standalone — no external dependencies, pure NEC 2023 knowledge.
+                             **Capability-first structure:** Each capability under `capabilities/` is a self-contained unit with its own commands, skills, agents, hooks, and documentation. No shared state between capabilities except through MCP servers.
 
----
+                             **MCP servers:** Shared services that capabilities depend on. `builder-mcp` runs as Azure Functions (HTTP transport). `m365-mcp` runs locally as a TypeScript stdio server. `marketing-mcp` contains both active and spec-only servers.
 
-*Created: 2026-03-19 by Phoenix Echo (Opus 4.6)*
-*Phoenix Electric LLC — Denver Metro, Colorado*
+                             **Gateway integration:** The V3 Gateway (PHOENIX_UNIFIED_STAGING) uses vanilla JavaScript only — no React or frameworks in Gateway runtime per the Product Bible. Capabilities that integrate with the Gateway provide vanilla JS adapter modules.
+
+                             **Security model:** All credentials stored in Azure Key Vault (PhoenixAiVault). MCP server configs use environment variable fallbacks. No API keys, tokens, or secrets in any file in this repo.
+
+                             **Agent workflow:** Echo (CLI on Mac Pro) executes builds and operations. BBB (Browser on Mac Studio) architects, documents, and reviews. Codex reviews from outside the build flow. Shane orchestrates.
+
+                             ---
+
+                             ## Key References
+
+                             | Document | Description |
+                             |---|---|
+                             | [CAPABILITY_REGISTRY.md](CAPABILITY_REGISTRY.md) | Master index of all capabilities and MCP servers |
+                             | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Full system architecture |
+                             | [docs/PLUGIN_DEVELOPMENT_GUIDE.md](docs/PLUGIN_DEVELOPMENT_GUIDE.md) | How to build a new capability |
+                             | [docs/MCP_DEVELOPMENT_GUIDE.md](docs/MCP_DEVELOPMENT_GUIDE.md) | How to build an MCP server |
+                             | [docs/SKILL_AUTHORING_GUIDE.md](docs/SKILL_AUTHORING_GUIDE.md) | How to author skills |
+
+                             ---
+
+                             *Phoenix Electric LLC — Denver Metro, Colorado*
+                             *Built by Shane Warehime, Phoenix Echo, and BBB (Browser Blitz Builder)*
+                             *Last updated: 2026-04-04 (Phase 5)*

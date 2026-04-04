@@ -1,4 +1,10 @@
-# Build Doc — phoenix-plugins
+> **ARCHIVED** — This document was written during Phase 1 (2026-03-27) when the repo was still called "phoenix-plugins" and contained 8 plugins. The repo has since been restructured as **Phoenix Toolbox** with 11 capabilities, 9 MCP servers, and a capability-first architecture. This file is preserved for historical reference. For current documentation, see `README.md`, `CAPABILITY_REGISTRY.md`, and `docs/`.
+> >
+> >> Archived: 2026-04-04 (Phase 5)
+> >>
+> >> ---
+> >>
+> >> # Build Doc — phoenix-plugins
 **Owner:** GIT-PHOENIX-HUB | **Last Updated:** 2026-03-27
 
 ## Objectives

@@ -1,4 +1,10 @@
-# Product Bible — phoenix-plugins
+> **ARCHIVED** — This Product Bible was written during Phase 1 (2026-03-27) when the repo was called "phoenix-plugins" with a flat `plugins/` directory of 8 plugins. The repo has since been restructured as **Phoenix Toolbox** with a capability-first architecture: 11 capabilities under `capabilities/`, 9 MCP servers under `mcp-servers/`, comprehensive templates under `templates/`, and development guides under `docs/`. This file is preserved for historical reference. For current architecture, see `docs/ARCHITECTURE.md` and `README.md`.
+> >
+> >> Archived: 2026-04-04 (Phase 5)
+> >>
+> >> ---
+> >>
+> >> # Product Bible — phoenix-plugins
 **Owner:** GIT-PHOENIX-HUB | **Last Updated:** 2026-03-27
 
 ## Purpose
