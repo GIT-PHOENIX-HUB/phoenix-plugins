@@ -1,0 +1,12 @@
+{
+    "name": "lighting-pro",
+    "version": "1.0.0",
+    "description": "LightingPro — Senior Lighting Control Specialist, System Integrator, and NEC 2023 Code Compliance Expert. Full-spectrum DMX-512 controls, LED technology, American Lighting products, wet-location installations, Control4 integration, and REV Control LC devices.",
+    "author": {
+          "name": "Shane Warehime",
+          "email": "shane@phoenixelectric.life"
+    },
+    "repository": "https://github.com/GIT-PHOENIX-HUB/phoenix-toolbox",
+    "license": "PROPRIETARY",
+    "keywords": ["lighting", "dmx", "led", "nec-2023", "control4", "rev-control", "wet-location", "rgbw", "american-lighting", "phoenix-electric"]
+}
