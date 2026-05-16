@@ -52,7 +52,7 @@ Firecrawl requires an API key (`FIRECRAWL_API_KEY` / `fc-...`). Per Phoenix poli
 
 ## Installation
 
-Symlink or copy this folder to `~/.claude/plugins/firecrawl/`:
+This capability ships with `.claude-plugin/plugin.json` so Claude Code discovers it automatically on plugin-directory scan. Symlink or copy this folder to `~/.claude/plugins/firecrawl/`:
 
 ```bash
 ln -s /path/to/capabilities/firecrawl ~/.claude/plugins/firecrawl

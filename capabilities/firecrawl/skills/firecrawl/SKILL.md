@@ -100,8 +100,9 @@ The skill bundles six task-specific playbooks. Pick the one that matches the use
 - Use `null` for missing fields — never omit keys.
 - Arrays must be arrays even for single items.
 - Numbers must be numbers, not strings: `10.99`, not `"$10.99"`.
-- Use `bashExec` with `jq` to merge data from multiple sources where available:
+- Use the `Bash` tool with `jq` to merge data from multiple sources where available:
   `jq -s '.[0] * .[1]' /data/part1.json /data/part2.json > /data/merged.json`
+  (If you are running inside the upstream firecrawl/web-agent runtime instead of Claude Code, the equivalent tool is `bashExec` powered by `just-bash`.)
 - Validate before emitting: required fields present, types correct, no array duplicates, source URLs included.
 
 ### 3. Pricing Tracker

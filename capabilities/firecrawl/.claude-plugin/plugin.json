@@ -1,0 +1,12 @@
+{
+  "name": "firecrawl",
+  "version": "1.0.0",
+  "description": "Firecrawl web research and structured-extraction playbook. Auto-activates on web scraping, crawling, pricing tracking, competitor analysis, SEC filings, and product/SKU extraction tasks. Bundles deep-research, structured-extraction, pricing-tracker, competitor-analysis, financial-research, and e-commerce sub-playbooks adapted from the open-source firecrawl/web-agent reference implementation (MIT).",
+  "author": {
+    "name": "Shane Warehime",
+    "email": "shane@phoenixelectric.life"
+  },
+  "repository": "https://github.com/GIT-PHOENIX-HUB/phoenix-toolbox",
+  "license": "PROPRIETARY",
+  "keywords": ["firecrawl", "web-scraping", "research", "extraction", "pricing", "competitor-analysis", "phoenix-electric"]
+}
