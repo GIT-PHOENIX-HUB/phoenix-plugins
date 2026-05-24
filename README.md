@@ -27,6 +27,7 @@ This repo follows a **capability-first architecture**: every functional unit liv
 | **Phoenix 365** | `capabilities/phoenix-365/` | 4 | 3 | 2 | 1 | Active |
 | **File Steward** | `capabilities/file-steward/` | 3 | 0 | 1 | 0 | Active |
 | **Electrical Guru** | `capabilities/electrical-guru/` | 1 | 1 | 0 | 0 | Active |
+| **Lighting Pro** | `capabilities/lighting-pro/` | 1 | 1 | 0 | 0 | Active |
 | **Phoenix Knowledge** | `capabilities/phoenix-knowledge/` | 1 | 1 | 1 | 0 | Active |
 | **Volt Marketing** | `capabilities/volt-marketing/` | 1 | 1 | 0 | 0 | Active |
 | **Firecrawl** | `capabilities/firecrawl/` | — | 1 | — | — | Active — Doc-based |
@@ -59,10 +60,11 @@ See [CAPABILITY_REGISTRY.md](CAPABILITY_REGISTRY.md) for the full registry with 
 
 ```
 phoenix-toolbox/
-├── capabilities/              # All capabilities (11 total)
+├── capabilities/              # All capabilities (13 total)
 │   ├── echo-persistence/      # Identity, logging, session survival
 │   ├── electrical-guru/       # NEC 2023 code consultant
 │   ├── file-steward/          # File management and triage
+│   ├── lighting-pro/          # Lighting controls, DMX, LED, NEC 2023 compliance
 │   ├── phoenix-comms/         # Cross-agent heartbeat protocol
 │   ├── phoenix-knowledge/     # Phoenix Electric knowledge base
 │   ├── rexel/                 # Vendor pricing and purchase history
@@ -70,7 +72,7 @@ phoenix-toolbox/
 │   ├── volt-marketing/        # Marketing strategist + MCP server
 │   ├── gauntlet/              # Multi-agent terminal dashboard (standalone)
 │   ├── phoenix-365/           # Microsoft 365 integration
-│   ├── firecrawl/             # Web research / scraping playbook (doc-based)
+│   ├── firecrawl/             # Web research / scraping playbook
 │   └── browser-persistence/   # Browser session persistence (doc-based)
 ├── mcp-servers/               # Shared MCP servers
 │   ├── builder-mcp/           # Multi-module Azure Functions platform

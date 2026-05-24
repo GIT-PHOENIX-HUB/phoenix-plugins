@@ -16,6 +16,7 @@ Single source of truth for what's available and where to find it.
 | Electrical Guru | `capabilities/electrical-guru/` | 1 | 1 | 0 | 0 | Active |
 | File Steward | `capabilities/file-steward/` | 3 | 0 | 1 | 0 | Active |
 | Firecrawl | `capabilities/firecrawl/` | 0 | 1 | 0 | 0 | Active |
+| Lighting Pro | `capabilities/lighting-pro/` | 1 | 1 | 0 | 0 | Active |
 | Phoenix Comms | `capabilities/phoenix-comms/` | 5 | 0 | 0 | 3 | Active |
 | Phoenix Knowledge | `capabilities/phoenix-knowledge/` | 1 | 1 | 1 | 0 | Active |
 | Rexel | `capabilities/rexel/` | 4 | 1 | 1 | 0 | Active |
@@ -25,7 +26,7 @@ Single source of truth for what's available and where to find it.
 | Phoenix 365 | `capabilities/phoenix-365/` | 4 | 3 | 2 | 1 | Active |
 | Browser Persistence | `capabilities/browser-persistence/` | 0 | 4 | 0 | 0 | Active — Doc-based Persistence |
 
-**Totals:** 12 capabilities, 32 commands, 14 skills, 11 agents, 7 hook definitions
+**Totals:** 13 capabilities, 33 commands, 15 skills, 11 agents, 7 hook definitions
 
 > **Hook counting standard:** Hooks = number of event handler definitions that fire at runtime.
 > > Empty hooks.json config files (Rexel, ServiceFusion) count as 0.
