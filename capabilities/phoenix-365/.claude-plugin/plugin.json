@@ -1,0 +1,65 @@
+{
+  "name": "phoenix-365",
+  "version": "0.1.0",
+  "description": "Microsoft 365 integration for Phoenix Electric AI — mail, calendar, SharePoint, OneDrive",
+  "author": "Phoenix Echo / Shane Warehime",
+  "commands": [
+    {
+      "name": "365",
+      "description": "Microsoft 365 hub — connection status and available sub-commands",
+      "path": "commands/365.md"
+    },
+    {
+      "name": "mail",
+      "description": "Email operations — list, read, send, search messages via Microsoft Graph",
+      "path": "commands/mail.md"
+    },
+    {
+      "name": "sharepoint",
+      "description": "SharePoint operations — browse sites, read lists, manage items, upload files",
+      "path": "commands/sharepoint.md"
+    },
+    {
+      "name": "calendar",
+      "description": "Calendar operations — view today/week schedule, create events",
+      "path": "commands/calendar.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "graph-operations",
+      "description": "Triggers when user asks about M365 data — email, calendar, files, SharePoint",
+      "path": "skills/graph-operations.md"
+    },
+    {
+      "name": "sharepoint-data",
+      "description": "Triggers when user asks to look up, check, or update SharePoint data",
+      "path": "skills/sharepoint-data.md"
+    },
+    {
+      "name": "email-composer",
+      "description": "Triggers when user wants to send, draft, or reply to an email",
+      "path": "skills/email-composer.md"
+    }
+  ],
+  "agents": [
+    {
+      "name": "m365-operations",
+      "description": "Autonomous agent for chaining multiple M365 operations together",
+      "path": "agents/m365-operations.md"
+    },
+    {
+      "name": "sharepoint-analyst",
+      "description": "Specialized agent for SharePoint data retrieval, analysis, and cross-referencing",
+      "path": "agents/sharepoint-analyst.md"
+    }
+  ],
+  "hooks": [
+    {
+      "name": "session-start",
+      "description": "Checks M365 connection status on session start",
+      "event": "session-start",
+      "path": "hooks/session-start.sh"
+    }
+  ]
+}

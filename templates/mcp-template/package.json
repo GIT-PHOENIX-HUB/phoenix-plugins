@@ -1,0 +1,51 @@
+{
+    "name": "{{mcp-server-name}}",
+    "version": "1.0.0",
+    "description": "{{MCP_SERVER_DESCRIPTION}} — Phoenix Toolbox MCP Server",
+    "type": "module",
+    "main": "dist/index.js",
+    "scripts": {
+          "build": "tsc",
+          "start": "node dist/index.js",
+          "dev": "tsc --watch & node --watch dist/index.js",
+          "clean": "rm -rf dist",
+          "lint": "eslint src/",
+          "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+          "@modelcontextprotocol/sdk": "^1.0.0"
+    },
+    "devDependencies": {
+          "@types/node": "^20.0.0",
+          "typescript": "^5.0.0"
+    },
+    "engines": {
+          "node": ">=18.0.0"
+    },
+    "keywords": [
+          "mcp",
+          "phoenix-toolbox",
+          "claude-code",
+          "{{KEYWORD}}"
+    ],
+    "author": "{{AUTHOR}}",
+    "license": "UNLICENSED",
+    "private": true,
+    "_template_notes": {
+          "instructions": [
+                  "1. Replace all {{PLACEHOLDER}} values",
+                  "2. Add any additional dependencies your server needs",
+                  "3. If using Azure Key Vault, add: @azure/identity and @azure/keyvault-secrets",
+                  "4. If making HTTP requests, add: node-fetch or axios",
+                  "5. Run 'npm install' after filling in this template",
+                  "6. Run 'npm run build' to compile TypeScript",
+                  "7. Test with 'npm start'"
+          ],
+          "common_dependencies": {
+                  "@azure/identity": "For Azure Key Vault authentication",
+                  "@azure/keyvault-secrets": "For Azure Key Vault secret retrieval",
+                  "node-fetch": "For HTTP API calls (if not using native fetch)",
+                  "zod": "For runtime input validation"
+          }
+    }
+}

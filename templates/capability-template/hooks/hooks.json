@@ -1,0 +1,127 @@
+{
+    "_template": "Phoenix Toolbox — Hooks Configuration Template",
+    "_description": [
+          "Hooks are lifecycle event handlers that fire at specific points during",
+          "a Claude Code session. They enable capabilities to inject behavior",
+          "automatically without requiring explicit user commands.",
+          "",
+          "Available hook events:",
+          "  - SessionStart: Fires when a new Claude Code session begins",
+          "  - SessionEnd: Fires when a session is ending",
+          "  - PreToolUse: Fires before a tool is executed (can modify/block)",
+          "  - PostToolUse: Fires after a tool completes (can react to results)",
+          "  - Notification: Fires on system notifications",
+          "",
+          "Reference: capabilities/echo-persistence/hooks/ (3 production hooks)",
+          "Reference: capabilities/phoenix-comms/hooks/ (3 production hooks)",
+          "Guide: docs/PLUGIN_DEVELOPMENT_GUIDE.md (Section 6: Hooks)"
+    ],
+
+    "hooks": [
+          {
+                  "event": "SessionStart",
+                  "description": "{{HOOK_DESCRIPTION}} — Runs when session begins",
+                  "enabled": true,
+                  "priority": 10,
+                  "action": {
+                            "type": "{{ACTION_TYPE}}",
+                            "target": "{{ACTION_TARGET}}",
+                            "parameters": {}
+                  },
+                  "_notes": [
+                            "SessionStart hooks are ideal for:",
+                            "  - Loading context files (buffers, configs, state)",
+                            "  - Checking for pending tasks or missions",
+                            "  - Verifying environment prerequisites",
+                            "  - Setting session-level variables",
+                            "",
+                            "Priority: Lower numbers run first. Default is 10.",
+                            "Use 1-5 for critical initialization, 10 for standard, 20+ for optional.",
+                            "",
+                            "Action types:",
+                            "  - 'read_file': Read a file into context",
+                            "  - 'execute_command': Run a slash command",
+                            "  - 'check_condition': Evaluate a condition before proceeding",
+                            "  - 'notify': Display a notification to the user"
+                  ]
+          },
+          {
+                  "event": "PreToolUse",
+                  "description": "{{HOOK_DESCRIPTION}} — Runs before tool execution",
+                  "enabled": true,
+                  "priority": 10,
+                  "tool_filter": "{{TOOL_NAME_OR_PATTERN}}",
+                  "action": {
+                            "type": "{{ACTION_TYPE}}",
+                            "target": "{{ACTION_TARGET}}",
+                            "parameters": {}
+                  },
+                  "_notes": [
+                            "PreToolUse hooks intercept tool calls before execution.",
+                            "Use cases:",
+                            "  - Validate parameters before dangerous operations",
+                            "  - Block forbidden actions (e.g., rm, delete)",
+                            "  - Log tool usage for audit trails",
+                            "  - Modify tool parameters (add safety flags, etc.)",
+                            "",
+                            "tool_filter: Which tool(s) trigger this hook.",
+                            "  - Exact match: 'Bash' (only Bash tool)",
+                            "  - Pattern: 'Bash|Write' (Bash or Write tools)",
+                            "  - Wildcard: '*' (all tools)",
+                            "",
+                            "IMPORTANT: PreToolUse hooks that block operations should",
+                            "provide clear error messages explaining WHY and what to do instead."
+                  ]
+          },
+          {
+                  "event": "PostToolUse",
+                  "description": "{{HOOK_DESCRIPTION}} — Runs after tool execution",
+            "enabled": true,
+            "priority": 10,
+            "tool_filter": "{{TOOL_NAME_OR_PATTERN}}",
+            "action": {
+          "type": "{{ACTION_TYPE}}",
+                      "target": "{{ACTION_TARGET}}",
+                      "parameters": {}
+            },
+            "_notes": [
+          "PostToolUse hooks react to completed tool executions.",
+                      "Use cases:",
+                      "  - Log results for audit/history",
+                      "  - Trigger follow-up actions based on results",
+                      "  - Update state files after modifications",
+                      "  - Send notifications on specific outcomes"
+            ]
+      },
+          {
+                  "event": "SessionEnd",
+                  "description": "{{HOOK_DESCRIPTION}} — Runs when session is ending",
+            "enabled": true,
+            "priority": 10,
+            "action": {
+          "type": "{{ACTION_TYPE}}",
+                      "target": "{{ACTION_TARGET}}",
+                      "parameters": {}
+            },
+            "_notes": [
+          "SessionEnd hooks handle cleanup and persistence.",
+                      "Use cases:",
+                      "  - Save session state to buffer files",
+                      "  - Commit uncommitted work",
+                      "  - Post checkpoint comments",
+                      "  - Archive session logs",
+                      "",
+                      "CRITICAL: SessionEnd hooks must be fast and reliable.",
+                      "If Chrome is crashing, complex hooks may not complete."
+            ]
+      }
+],
+
+    "_configuration": {
+          "capability": "{{CAPABILITY_NAME}}",
+          "version": "1.0.0",
+          "author": "{{AUTHOR}}",
+          "created": "{{DATE}}",
+          "last_updated": "{{DATE}}"
+    }
+}

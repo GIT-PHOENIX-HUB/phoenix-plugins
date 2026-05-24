@@ -7,6 +7,9 @@ credentials.*
 .DS_Store
 Thumbs.db
 
+# Backup artifacts
+*.bak
+
 # Node
 node_modules/
 dist/

@@ -1,0 +1,43 @@
+# ============================================================================
+# Storm Profile: High Wind
+# Phoenix Electric — Colorado Springs, CO (El Paso County)
+# ============================================================================
+#
+# REASONING:
+# Colorado Springs regularly experiences high wind events, especially along
+# the I-25 corridor and near the foothills. Sustained winds of 40-60+ mph
+# down power lines, snap utility poles, blow tree limbs into service
+# entrances, and rip mast/weatherhead assemblies off roofs. Customers need
+# electricians to reconnect service drops, repair meter bases, and handle
+# downed-line-adjacent work (after utility clears).
+#
+# Budget multiplier 1.2x is conservative — wind events are common in the
+# Springs and not every one generates electrical calls. 12h TTL is tight
+# because wind damage is immediately visible and calls come fast. 6h
+# cooldown keeps us responsive to sequential wind events (common in spring).
+# ============================================================================
+
+trigger:
+  event_types:
+    - "High Wind Warning"            # NWS: sustained >= 40mph or gusts >= 58mph
+    - "High Wind Watch"              # NWS: conditions favorable for high winds
+    - "Wind Advisory"                # NWS: sustained 31-39mph or gusts 46-57mph
+    - "Extreme Wind Warning"         # NWS: surface winds >= 115mph (rare but catastrophic)
+  min_severity: moderate
+  geography: el_paso_county_co
+
+actions:
+  gbp_post: templates/gbp-posts/storm-response-wind.md
+  budget_multiplier: 1.2            # server-enforced cap: 2.0
+  max_daily_budget: 120             # server-enforced cap from vault
+  ttl_hours: 12                     # wind damage is immediately visible
+  requires_approval: true           # server-enforced; cannot be false without owner
+
+rollback:
+  baseline_budget_source: google-ads-campaign-daily
+  dedupe_key: nws-alert-id
+  cooldown_hours: 6                 # short — sequential wind events are common
+  allowed_actions:
+    - gbp_post
+    - budget_increase
+    - ad_schedule_extend

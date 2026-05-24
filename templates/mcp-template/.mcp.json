@@ -1,0 +1,73 @@
+{
+    "_template_notes": {
+          "description": "MCP Server Configuration Template — Phoenix Toolbox",
+          "rules": [
+                  "NO hardcoded paths. Use environment variables with fallbacks.",
+                  "NO credentials in this file. Use Azure Key Vault.",
+                  "Paths should use $HOME, $PHOENIX_ROOT, or relative paths.",
+                  "This file goes in the project root or capability directory."
+          ],
+          "reference": "mcp-servers/m365-mcp/.mcp.json (production example)",
+          "guide": "docs/MCP_DEVELOPMENT_GUIDE.md"
+    },
+
+  "mcpServers": {
+        "{{MCP_SERVER_NAME}}": {
+                "command": "node",
+                "args": [
+                          "${PHOENIX_ROOT:-$HOME/phoenix-toolbox}/mcp-servers/{{MCP_SERVER_NAME}}/dist/index.js"
+                ],
+                "env": {
+                          "NODE_ENV": "production",
+                          "LOG_LEVEL": "info",
+                          "AZURE_KEY_VAULT_URL": "${AZURE_KEY_VAULT_URL}",
+                          "{{CUSTOM_ENV_VAR}}": "${{{CUSTOM_ENV_VAR}}:-{{DEFAULT_VALUE}}}"
+                },
+                "disabled": false,
+                "alwaysAllow": [],
+                "timeout": 30000,
+                "_transport_notes": {
+                          "stdio": {
+                                      "description": "Standard transport. Server runs as child process.",
+                                      "config": "Use 'command' and 'args' fields above.",
+                                      "example": "command: 'node', args: ['path/to/index.js']"
+                          },
+                          "http": {
+                                      "description": "HTTP transport. Server runs as REST endpoint.",
+                                      "config": "Replace 'command'/'args' with 'url' field.",
+                                      "example": "url: 'http://localhost:3100/mcp' or Azure Function URL",
+                                      "when_to_use": "Cloud-hosted servers, shared services, Azure Functions"
+                          }
+                }
+        }
+  },
+
+    "_path_conventions": {
+          "PHOENIX_ROOT": "Root of phoenix-toolbox repo. Falls back to $HOME/phoenix-toolbox.",
+          "relative_paths": "Preferred when server is inside the repo tree.",
+          "env_var_syntax": "${VAR:-default} — uses VAR if set, otherwise 'default'.",
+          "never_do": [
+                  "/Users/shane/Documents/phoenix-toolbox (hardcoded home path)",
+                  "/absolute/path/to/anything (hardcoded absolute path)",
+                  "Inline API keys or tokens"
+          ]
+    },
+
+    "_credential_pattern": {
+          "method": "Azure Key Vault",
+          "flow": [
+                  "1. Store secret in Azure Key Vault",
+                  "2. Set AZURE_KEY_VAULT_URL env var",
+                  "3. Server code retrieves secret at runtime via Key Vault SDK",
+                  "4. Never log, print, or expose secrets"
+          ],
+          "local_dev": "Use 'az login' for local Key Vault access during development."
+    },
+
+    "_alwaysAllow_notes": {
+          "description": "Tools that Claude can call without user confirmation.",
+          "default": "Empty array — all tools require confirmation.",
+          "example": ["read_data", "list_items"],
+          "caution": "Only allow tools that are read-only and safe. Never auto-allow write/delete operations."
+    }
+}

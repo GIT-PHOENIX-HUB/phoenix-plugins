@@ -1,0 +1,43 @@
+# ============================================================================
+# Storm Profile: Severe Thunderstorm
+# Phoenix Electric — Colorado Springs, CO (El Paso County)
+# ============================================================================
+#
+# REASONING:
+# Severe thunderstorms bring lightning, which is the #1 cause of whole-home
+# surge damage. A single close strike can destroy HVAC controls, smart home
+# systems, breaker panels, and appliances — even with basic surge strips.
+# Colorado Springs averages 60+ thunderstorm days per year. Post-storm
+# search volume for "electrician after lightning" and "surge damage repair"
+# spikes within 2-6 hours of the event.
+#
+# Budget multiplier 1.3x is moderate — thunderstorms are frequent, so we
+# avoid over-spending on routine events. 18h TTL captures same-day and
+# next-morning searches. 8h cooldown is shorter because individual
+# thunderstorm cells pass quickly and each warning is usually distinct.
+# ============================================================================
+
+trigger:
+  event_types:
+    - "Severe Thunderstorm Warning"  # NWS: wind >= 58mph or hail >= 1"
+    - "Severe Thunderstorm Watch"    # NWS: conditions favorable
+    - "Lightning"                    # NWS: lightning activity reports
+    - "Special Weather Statement"    # NWS: localized thunderstorm detail
+  min_severity: moderate
+  geography: el_paso_county_co
+
+actions:
+  gbp_post: templates/gbp-posts/storm-response-thunderstorm.md
+  budget_multiplier: 1.3            # server-enforced cap: 2.0
+  max_daily_budget: 150             # server-enforced cap from vault
+  ttl_hours: 18                     # covers same-day + next-morning window
+  requires_approval: true           # server-enforced; cannot be false without owner
+
+rollback:
+  baseline_budget_source: google-ads-campaign-daily
+  dedupe_key: nws-alert-id
+  cooldown_hours: 8                 # short cooldown — storms are distinct events
+  allowed_actions:
+    - gbp_post
+    - budget_increase
+    - ad_schedule_extend

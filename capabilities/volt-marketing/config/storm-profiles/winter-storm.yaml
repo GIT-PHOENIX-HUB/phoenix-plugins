@@ -1,0 +1,48 @@
+# ============================================================================
+# Storm Profile: Winter Storm
+# Phoenix Electric — Colorado Springs, CO (El Paso County)
+# ============================================================================
+#
+# REASONING:
+# Winter storms in Colorado Springs bring heavy snow, ice accumulation, and
+# extended power outages. This is THE generator sales opportunity. When power
+# goes out for 12-48 hours in freezing temps, homeowners search for standby
+# generators, transfer switches, and emergency electrical service. Ice on
+# power lines causes cascading outages. Frozen pipes that burst often take
+# out nearby electrical runs, requiring both plumber and electrician.
+#
+# Budget multiplier 1.5x matches hail — high conversion intent and high
+# ticket value (generator installs are $5k-$15k jobs). 36h TTL is the
+# longest standard profile because winter storm effects persist — roads
+# stay bad, power restoration takes days, and customers research generators
+# for 24-48h before calling. 24h cooldown prevents overlap with multi-day
+# storm systems common in Colorado Springs winters.
+# ============================================================================
+
+trigger:
+  event_types:
+    - "Winter Storm Warning"         # NWS: heavy snow/ice expected
+    - "Winter Storm Watch"           # NWS: conditions favorable
+    - "Blizzard Warning"             # NWS: sustained winds 35mph + visibility < 1/4 mi
+    - "Ice Storm Warning"            # NWS: significant ice accumulation expected
+    - "Winter Weather Advisory"      # NWS: lighter but still impactful winter weather
+    - "Freeze Warning"               # NWS: sub-freezing temps threatening infrastructure
+  min_severity: moderate
+  geography: el_paso_county_co
+
+actions:
+  gbp_post: templates/gbp-posts/storm-response-winter.md
+  budget_multiplier: 1.5            # server-enforced cap: 2.0
+  max_daily_budget: 250             # server-enforced cap from vault — highest standard profile
+  ttl_hours: 36                     # extended: storm effects persist, generator research takes time
+  requires_approval: true           # server-enforced; cannot be false without owner
+
+rollback:
+  baseline_budget_source: google-ads-campaign-daily
+  dedupe_key: nws-alert-id
+  cooldown_hours: 24                # long — multi-day storm systems are common
+  allowed_actions:
+    - gbp_post
+    - budget_increase
+    - ad_schedule_extend
+    - generator_landing_page_boost   # unique to winter — activates generator-specific ads

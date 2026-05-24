@@ -1,0 +1,24 @@
+{
+  "name": "phoenix-gauntlet",
+  "version": "1.0.0",
+  "description": "Phoenix AI Gauntlet — Multi-agent command center",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node --env-file-if-exists=.env server/index.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "test": "node --test 'server/test/*.test.js'"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "ws": "^8.16.0",
+    "node-pty": "^1.0.0",
+    "chokidar": "^3.6.0",
+    "cors": "^2.8.5",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

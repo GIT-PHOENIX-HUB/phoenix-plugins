@@ -1,0 +1,42 @@
+# ============================================================================
+# Storm Profile: Hail Storm
+# Phoenix Electric — Colorado Springs, CO (El Paso County)
+# ============================================================================
+#
+# REASONING:
+# Colorado Springs sits in "Hail Alley" — El Paso County averages 3-5
+# significant hail events per season. Hail damages electrical panels,
+# outdoor disconnect boxes, conduit runs, and service entrance equipment.
+# Large hail (1"+) can crack weatherheads, destroy outdoor lighting, and
+# compromise panel enclosures. Homeowners often don't realize electrical
+# damage occurred until days later when breakers trip or outlets fail.
+#
+# Budget multiplier 1.5x reflects high conversion intent — property owners
+# actively searching for damage repair. 24h TTL covers the typical
+# inspection-and-call window after a hail event. 12h cooldown prevents
+# budget bleed from back-to-back cells in the same storm system.
+# ============================================================================
+
+trigger:
+  event_types:
+    - "Hail"                        # NWS: standalone hail reports
+    - "Severe Thunderstorm Warning"  # NWS: often includes hail component
+    - "Severe Weather Statement"     # NWS: follow-up statements with hail detail
+  min_severity: severe
+  geography: el_paso_county_co
+
+actions:
+  gbp_post: templates/gbp-posts/storm-response-hail.md
+  budget_multiplier: 1.5            # server-enforced cap: 2.0
+  max_daily_budget: 200             # server-enforced cap from vault
+  ttl_hours: 24                     # covers next-day inspection searches
+  requires_approval: true           # server-enforced; cannot be false without owner
+
+rollback:
+  baseline_budget_source: google-ads-campaign-daily
+  dedupe_key: nws-alert-id
+  cooldown_hours: 12                # prevents re-trigger from trailing cells
+  allowed_actions:
+    - gbp_post
+    - budget_increase
+    - ad_schedule_extend

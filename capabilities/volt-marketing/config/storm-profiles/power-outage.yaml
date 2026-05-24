@@ -1,0 +1,63 @@
+# ============================================================================
+# Storm Profile: Power Outage (Compound / Utility-Reported)
+# Phoenix Electric — Colorado Springs, CO (El Paso County)
+# ============================================================================
+#
+# REASONING:
+# This is the HIGHEST-VALUE scenario for Phoenix Electric. Power outages
+# drive the most urgent, highest-intent searches: "electrician near me now",
+# "emergency generator install", "power out in my neighborhood." This profile
+# triggers in two ways:
+#
+#   1. COMPOUND TRIGGER: When 2+ other storm profiles fire within a 4-hour
+#      window (e.g., hail + high wind = likely widespread outage).
+#   2. UTILITY TRIGGER: When Colorado Springs Utilities or Mountain View
+#      Electric reports outages affecting El Paso County.
+#
+# Budget multiplier 1.8x is the most aggressive — just under the 2.0 server
+# cap — because conversion rates during outages are 3-5x normal. 48h TTL is
+# the longest of any profile: outage recovery takes days, generator purchase
+# decisions happen 24-72h after the event, and "I never want this to happen
+# again" searches continue for a week. 12h cooldown balances responsiveness
+# with budget protection during extended outage events.
+#
+# NOTE: This profile's event_types include NWS alerts that commonly
+# accompany outages, but the primary trigger mechanism is the compound/
+# utility detection logic in the weather-trigger service, not NWS alone.
+# ============================================================================
+
+trigger:
+  event_types:
+    - "Power Outage"                 # Internal: utility-reported outage signal
+    - "Severe Thunderstorm Warning"  # NWS: compound trigger component
+    - "High Wind Warning"            # NWS: compound trigger component
+    - "Ice Storm Warning"            # NWS: compound trigger component
+    - "Blizzard Warning"             # NWS: compound trigger component
+    - "Winter Storm Warning"         # NWS: compound trigger component
+    - "Extreme Wind Warning"         # NWS: compound trigger component
+  min_severity: severe
+  geography: el_paso_county_co
+
+  # Compound trigger logic (evaluated by weather-trigger service):
+  # Activates when >= 2 other storm profiles have fired within this window.
+  compound_trigger:
+    min_concurrent_profiles: 2
+    lookback_hours: 4
+
+actions:
+  gbp_post: templates/gbp-posts/storm-response-outage.md
+  budget_multiplier: 1.8            # server-enforced cap: 2.0 — most aggressive profile
+  max_daily_budget: 300             # server-enforced cap from vault — highest of all profiles
+  ttl_hours: 48                     # extended: outage recovery + generator research window
+  requires_approval: true           # server-enforced; cannot be false without owner
+
+rollback:
+  baseline_budget_source: google-ads-campaign-daily
+  dedupe_key: nws-alert-id
+  cooldown_hours: 12                # moderate — balances responsiveness with budget protection
+  allowed_actions:
+    - gbp_post
+    - budget_increase
+    - ad_schedule_extend
+    - generator_landing_page_boost   # activate generator-specific campaigns
+    - emergency_service_highlight    # boost "24/7 emergency" ad copy
