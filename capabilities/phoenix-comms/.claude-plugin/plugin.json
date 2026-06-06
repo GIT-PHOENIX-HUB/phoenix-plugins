@@ -1,9 +1,55 @@
 {
   "name": "phoenix-comms",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Cross-agent communication via shared LEDGER heartbeats. Enables Echo and Codex to see each other's presence and recent activity without derailing from their own tasks.",
   "author": {
     "name": "Phoenix Echo",
     "email": "shane@phoenixelectric.life"
+  },
+  "commands": [
+    {
+      "name": "start",
+      "description": "Start heartbeat — writes presence to HEARTBEAT file on configurable interval",
+      "file": "commands/start.md"
+    },
+    {
+      "name": "stop",
+      "description": "Stop heartbeat gracefully via PID file",
+      "file": "commands/stop.md"
+    },
+    {
+      "name": "check",
+      "description": "Quick check — is the other agent alive? Action names only, anti-derail boundary",
+      "file": "commands/check.md"
+    },
+    {
+      "name": "status",
+      "description": "Show who's alive and comms state — quick glance at cross-agent presence",
+      "file": "commands/status.md"
+    },
+    {
+      "name": "config",
+      "description": "Configure heartbeat interval (15s to 15m)",
+      "file": "commands/config.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "heartbeat-writer",
+      "description": "Writes current agent's heartbeat — called periodically during long sessions",
+      "file": "skills/heartbeat-writer.md"
+    },
+    {
+      "name": "team-awareness",
+      "description": "On session start, reads both heartbeats + last 5 LEDGER entries from each agent, presents team context",
+      "file": "skills/team-awareness.md"
+    }
+  ],
+  "hooks": {
+    "SessionStart": "hooks/hooks.json"
+  },
+  "codex-hooks": {
+    "SessionStart": "codex-hooks/heartbeat-codex.sh",
+    "SessionStop": "codex-hooks/comms-stop-codex.sh"
   }
 }
